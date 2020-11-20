@@ -4,11 +4,11 @@ Just another docker container for [resume-cli](https://github.com/jsonresume/res
 
 ## Getting Started 
 
-Save the following as executable script to your PATH (e.g. `~/.local/bin/resume-cli`):
+Save the following with `[VERSION]` replaced as executable script to your PATH (e.g. `~/.local/bin/resume-cli`):
 ```sh
 #!/bin/sh
 
-docker run --init --rm -p 4000:4000 -u $(id -u):$(id -g) -v "$(pwd):/work" -it rsteube/jsonresume-headless $@
+docker run --init --rm -p 4000:4000 -u $(id -u):$(id -g) -v "$(pwd):/work" -it rsteube/jsonresume-headless:[VERSION] $@
 ```
 
 then use just as if native:
