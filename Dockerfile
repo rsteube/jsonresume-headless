@@ -1,4 +1,4 @@
-FROM node
+FROM node AS base
 
 WORKDIR /data
 
@@ -45,7 +45,13 @@ RUN apt-get update && apt-get install -y \
   xdg-utils
 
 RUN npm init -y
-RUN npm install jsonresume/resume-cli \
+RUN npm install puppeteer
+
+FROM base
+ARG DOCKER_TAG
+ENV VERSION=${DOCKER_TAG}
+
+RUN npm install resume-cli@${VERSION} \
                 jsonresume-theme-class \
                 jsonresume-theme-classy \
                 jsonresume-theme-elegant \
@@ -60,7 +66,6 @@ RUN npm install jsonresume/resume-cli \
                 jsonresume-theme-slick \
                 jsonresume-theme-spartan \
                 jsonresume-theme-stackoverflow
-RUN npm install puppeteer
 
 # https://hub.docker.com/r/paskal/jsonresume/dockerfile
 # use sed to make the webserver available for the Docker container to map
@@ -73,3 +78,4 @@ ENV RESUME_PUPPETEER_NO_SANDBOX 1
 WORKDIR /work
 
 ENTRYPOINT ["node", "/data/node_modules/resume-cli"]
+
