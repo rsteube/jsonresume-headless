@@ -1,4 +1,4 @@
-FROM node AS base
+FROM node:slim AS base
 
 WORKDIR /data
 
