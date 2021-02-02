@@ -51,7 +51,7 @@ FROM base
 ARG DOCKER_TAG
 ENV VERSION=${DOCKER_TAG}
 
-RUN npm install resume-cli@${VERSION} \
+RUN npm install -g resume-cli@${VERSION} \
                 jsonresume-theme-class \
                 jsonresume-theme-classy \
                 jsonresume-theme-elegant \
@@ -61,6 +61,7 @@ RUN npm install resume-cli@${VERSION} \
                 jsonresume-theme-md \
                 jsonresume-theme-modern \
                 jsonresume-theme-onepage \
+                jsonresume-theme-orbit-original \
                 jsonresume-theme-paper \
                 jsonresume-theme-short \
                 jsonresume-theme-slick \
@@ -70,12 +71,11 @@ RUN npm install resume-cli@${VERSION} \
 # https://hub.docker.com/r/paskal/jsonresume/dockerfile
 # use sed to make the webserver available for the Docker container to map
 RUN sed -i~ "s/localhost/0.0.0.0/g" \
-    node_modules/resume-cli/index.js \
-    node_modules/resume-cli/lib/serve.js
+    /usr/local/lib/node_modules/resume-cli/build/main.js \
+    /usr/local/lib/node_modules/resume-cli/build/serve.js
 
 ENV RESUME_PUPPETEER_NO_SANDBOX 1
 
 WORKDIR /work
 
-ENTRYPOINT ["node", "/data/node_modules/resume-cli"]
-
+ENTRYPOINT ["resume"]
